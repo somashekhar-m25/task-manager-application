@@ -1,1 +1,4 @@
-package routers
+package router
+
+func StartApplication() {
+}
