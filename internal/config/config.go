@@ -4,20 +4,19 @@ import (
 	"path/filepath"
 
 	"github.com/joho/godotenv"
-	"github.com/somashekhar-m25/task-manager-application/internal/logger"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 func LoadEnv() {
-	logger.ZapLogger.Info("loading .env file")
+	log.Logger.Info().Msg("loadin .env files...")
 	envPath, err := filepath.Abs("../../")
 	if err != nil {
-		logger.ZapLogger.Error("error getting absolute .env path", zap.String("error: ", err.Error()))
+		log.Logger.Error().Err(err).Msg("error getting absolute .env path")
 	}
 	envPath = filepath.Join(envPath, "internal", "config", "application.env")
 	err = godotenv.Load(envPath)
 	if err != nil {
-		logger.ZapLogger.Panic("failed to load .env file", zap.String("error: ", err.Error()))
+		log.Logger.Info().Msg("failed to load .env file")
 	}
-	logger.ZapLogger.Info("successfull loaded .env file")
+	log.Logger.Info().Msg("successfull loaded .env file...")
 }
