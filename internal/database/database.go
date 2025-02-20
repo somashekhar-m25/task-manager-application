@@ -11,11 +11,8 @@ import (
 	"gorm.io/gorm"
 )
 
-type DataBase struct {
-	DB *gorm.DB
-}
-
-func ConnectToDB() (*DataBase, error) {
+func ConnectToDB() (*gorm.DB, error) {
+	logger.ZapLogger.Info("initiating database connection...")
 	//read database credentials from env
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
@@ -24,7 +21,7 @@ func ConnectToDB() (*DataBase, error) {
 	dbPort := os.Getenv("DB_PORT")
 
 	//postgres database source name
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", dbHost, dbUser, dbPassword, dbName, dbPort)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s", dbHost, dbUser, dbPassword, dbName, dbPort)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -46,7 +43,5 @@ func ConnectToDB() (*DataBase, error) {
 	}
 
 	logger.ZapLogger.Info("database connection successfull")
-	return &DataBase{
-		DB: db,
-	}, nil
+	return db, nil
 }

@@ -14,4 +14,5 @@ func init() {
 func main() {
 	logger.ZapLogger.Info("starting task-manager-application...")
 	router.StartApplication()
+	logger.ZapLogger.Info("closing task-manager-application...")
 }
